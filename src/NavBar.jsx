@@ -20,25 +20,25 @@ function Navbar() {
   };
 
   return (
-    <nav className="flex justify-between items-center p-4 px-[50px]  bg-main-500 ">
+    <nav className="flex justify-between items-center p-4 bg-main-500">
       {/* Logo */}
       <div className="flex items-center">
-        <img src={logo} alt="Logo" className="w-[200px] h-[100px]" />
+        <img src={logo} alt="Logo" className="w-32 md:w-[200px] h-auto" />
       </div>
 
       {/* Desktop & Tablet view: Search Bar */}
-      <div className="hidden border border-amber-50 rounded-md shadow md:flex items-center w-1/3">
+      <div className="hidden md:flex border border-amber-50 rounded-md shadow items-center w-1/3">
         <form onSubmit={handleSearchSubmit} className="flex w-full">
-        <div className="relative flex items-center w-full">
-            <img src={magnify2} className="w-6 h-6 absolute left-3 mx-2" />
+          <div className="relative flex items-center w-full">
+            <img src={magnify2} className="w-6 h-6 absolute left-3" />
             <input
-            type="text"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            placeholder="Search..."
-            className="w-full px-10 py-2 bg-amber-50 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-300 pl-12"  // Adjusted padding to create space
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder="Search..."
+              className="w-full px-10 py-2 bg-amber-50 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-300 pl-10"
             />
-        </div>
+          </div>
           <button
             type="submit"
             className="bg-main-500 px-4 py-2 rounded-r-md text-white hover:bg-main-600 transition-all"
@@ -50,9 +50,7 @@ function Navbar() {
 
       {/* Language Select */}
       <div className="relative hidden md:block">
-        <select
-          className="border border-gray-300 text-white rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-        >
+        <select className="border border-gray-300 text-white rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-300">
           <option value="en">English</option>
           <option value="fr">Français</option>
         </select>
@@ -70,7 +68,7 @@ function Navbar() {
       <div className="md:hidden flex items-center">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="text-main-500 focus:outline-none"
+          className="text-white focus:outline-none"
         >
           <svg
             className="w-6 h-6"
@@ -94,7 +92,7 @@ function Navbar() {
         <div className="absolute top-16 left-0 w-full bg-white shadow-md md:hidden flex flex-col items-center py-4 space-y-4">
           <form onSubmit={handleSearchSubmit} className="w-3/4 flex">
             <div className="relative flex items-center w-full">
-              <img src={magnify2} className="w-6 h-6 absolute left-3 ml-2" />
+              <img src={magnify2} className="w-6 h-6 absolute left-3" />
               <input
                 type="text"
                 value={searchQuery}
@@ -110,9 +108,7 @@ function Navbar() {
               Search
             </button>
           </form>
-          <select
-            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 w-3/4"
-          >
+          <select className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 w-3/4">
             <option value="en">English</option>
             <option value="fr">Français</option>
           </select>
@@ -127,5 +123,4 @@ function Navbar() {
     </nav>
   );
 }
-
 export default Navbar;

@@ -103,7 +103,7 @@ function App() {
             </span>
             <motion.button
               onClick={() => navigate('/signup')}
-              className="bg-amber-500 text-white px-6 py-2 my-4 rounded-lg hover:bg-amber-600 transition-all hidden md:block"
+              className="bg-amber-500 text-white px-6 py-2 my-4 rounded-lg hover:bg-amber-600 transition-all  block"
               whileHover={{ scale: 1.05 }}
             >
               Get Started

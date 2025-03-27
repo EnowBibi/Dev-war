@@ -4,11 +4,12 @@ import bell from "./assets/Bell.png";
 import dummy from "./assets/dummy.png";
 import NavBar from './NavBar2';
 import { FaProjectDiagram, FaClock, FaTasks, FaCheckCircle, FaBars } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Dashboard() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const screenLocation = useLocation();
+  const navigate = useNavigate();
 
   return (
     <div className='h-full min-h-screen w-full flex flex-col md:flex-row'>
@@ -21,12 +22,22 @@ function Dashboard() {
           </div>
         </div>
         {isMobileMenuOpen && (
-          <div className='bg-white shadow-lg'>
+          <div className='bg-main-500 shadow-lg'>
             <ul>
               <li className='px-4 py-2 border-b'>Home</li>
-              <li className='px-4 py-2 border-b'>Projects</li>
-              <li className='px-4 py-2 border-b'>Messages</li>
-              <li className='px-4 py-2 border-b'>Profile</li>
+              <li className='px-4 py-2 border-b'
+              onClick={() => navigate('/earnings')}
+              >Earnings</li>
+              <li className='px-4 py-2 border-b'
+              onClick={() => navigate('/messages')}
+              >Messages</li>
+              <li className='px-4 py-2 border-b'
+              onClick={() => navigate('/reviews')}
+              >Reviews</li>
+              <li className='px-4 py-2 border-b'
+              onClick={() => navigate('/settings')}
+              >Settings</li>
+              <li className='px-4 py-2 border-b'>Logout</li>
             </ul>
           </div>
         )}

@@ -11,6 +11,8 @@ import Login from './Login.jsx';
 import FreelancerDetail from './FreelancerDetailScreen.jsx';
 import FreelancersList from './FreelancersList.jsx';
 import Dashboard from './Dashboard.jsx';
+import Earnings from './Earnings.jsx';
+import Messages from './Messages';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -25,6 +27,9 @@ createRoot(document.getElementById('root')).render(
         <Route path="/freelancer/:id" element={<FreelancerDetail />} />
         <Route path="/freelancers" element={<FreelancersList />} />
         <Route path="/dashboard" element={<Dashboard/>} />
+        <Route path="/earnings" element={<Earnings/>} />
+        <Route path="/messages" element={<Messages/>} />
+      
       </Routes>
     </BrowserRouter>
   </StrictMode>,
