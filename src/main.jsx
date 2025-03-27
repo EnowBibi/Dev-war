@@ -8,6 +8,9 @@ import AccountCompletion from './AccountCompletion.jsx';
 import EmployerCompletion from './EmployerCompletion.jsx';
 import FreelanceCompletion from './FreelanceCompletion.jsx';
 import Login from './Login.jsx';
+import FreelancerDetail from './FreelancerDetailScreen.jsx';
+import FreelancersList from './FreelancersList.jsx';
+import Dashboard from './Dashboard.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -19,6 +22,9 @@ createRoot(document.getElementById('root')).render(
         <Route path="/employer-completion" element={<EmployerCompletion/>} />
         <Route path="/freelancer-completion" element={<FreelanceCompletion/>} />
         <Route path="/login" element={<Login/>} />
+        <Route path="/freelancer/:id" element={<FreelancerDetail />} />
+        <Route path="/freelancers" element={<FreelancersList />} />
+        <Route path="/dashboard" element={<Dashboard/>} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

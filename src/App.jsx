@@ -42,6 +42,38 @@ const freelancers = [
     projectImage: image3,
     profileImage: dummy,
   },
+  {
+    id: 5,
+    name: 'John Doe',
+    profession: 'Web Developer',
+    rating: 4.8,
+    projectImage: image2,
+    profileImage: dummy,
+  },
+  {
+    id: 6,
+    name: 'Jane Smith',
+    profession: 'Graphic Designer',
+    rating: 4.7,
+    projectImage: image3,
+    profileImage: dummy,
+  },
+  {
+    id: 7,
+    name: 'Michael Lee',
+    profession: 'Content Creator',
+    rating: 4.9,
+    projectImage: image2,
+    profileImage: dummy,
+  },
+  {
+    id: 8,
+    name: 'Sarah Johnson',
+    profession: 'Social Media Manager',
+    rating: 4.6,
+    projectImage: image3,
+    profileImage: dummy,
+  },
 ];
 
 function App() {
@@ -99,6 +131,7 @@ function App() {
               className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
+              onClick={() => navigate(`/freelancer/${freelancer.id}`)}
             >
               <img src={freelancer.projectImage} alt="Project" className="w-full h-40 object-cover" />
               <div className="p-4">
@@ -121,7 +154,7 @@ function App() {
           ))}
         </div>
         <motion.button
-          onClick={() => navigate('/signup')}
+          onClick={() => navigate('/freelancers')}
           className="bg-amber-500 text-white px-6 py-2 my-4 mx-auto block rounded-lg hover:bg-amber-600 transition-all"
           whileHover={{ scale: 1.05 }}
         >
