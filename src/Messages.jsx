@@ -1,31 +1,24 @@
 import React, { useState } from 'react';
-import NavBar from './NavBar2';
+import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa'; // Mobile menu icon
+import NavBar from './NavBar2';
+import dummy from './assets/dummy.png'; // Ensure correct path
+import dots from './assets/dots-vertical-circle-outline.png'; // Ensure correct path
 
 function Messages() {
   const screenLocation = useLocation();
   const navigate = useNavigate();
-  const [messages, setMessages] = useState([
-    { id: 1, sender: 'Alice', text: 'Hey, how are you?' },
-    { id: 2, sender: 'Bob', text: 'Don’t forget our meeting tomorrow!' },
-    { id: 3, sender: 'Charlie', text: 'Can you send me the report?' },
-  ]);
-  const [newMessage, setNewMessage] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { id: prevMessages.length + 1, sender: 'You', text: newMessage },
-      ]);
-      setNewMessage('');
-    }
-  };
+  const investors = [
+    { id: 1, name: 'Jace Kayode', desc: "I'm an investor looking for promising startups with high growth potential." },
+    { id: 2, name: 'Sarah Johnson', desc: "I focus on tech startups that innovate in AI and automation." },
+    { id: 3, name: 'Michael Chen', desc: "Looking to invest in green energy and sustainable businesses." },
+  ];
 
   return (
-    <div className="h-full min-h-screen w-full flex flex-col md:flex-row">
+    <div className="min-h-screen w-full flex flex-col md:flex-row">
       {/* Mobile Navbar */}
       <div className="md:hidden bg-main-500 text-white fixed w-full top-0 z-50">
         <div className="flex justify-between items-center px-4 py-3">
@@ -35,8 +28,13 @@ function Messages() {
           </button>
         </div>
         {isMobileMenuOpen && (
-          <div className="bg-main-500 shadow-lg">
-            <ul>
+          <motion.div
+            className="bg-main-500 shadow-lg"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ul className="flex flex-col">
               {['dashboard', 'earnings', 'messages', 'reviews', 'settings'].map((item) => (
                 <li
                   key={item}
@@ -51,7 +49,7 @@ function Messages() {
               ))}
               <li className="px-4 py-2 border-b cursor-pointer hover:bg-main-400">Logout</li>
             </ul>
-          </div>
+          </motion.div>
         )}
       </div>
 
@@ -59,46 +57,31 @@ function Messages() {
       <NavBar screen={screenLocation.pathname} />
 
       {/* Body */}
-      <div className="flex-grow pt-20 md:pt-0 px-4">
-        {/* Header */}
-        <div className="flex justify-center my-6">
-          <div className="bg-gray-200 py-2 px-6 rounded text-secondary-500 text-2xl md:text-3xl">
-            Messages
-          </div>
-        </div>
-
-        {/* Messages List */}
-        <div className="flex flex-col my-8 space-y-4">
-          {messages.map((message) => (
-            <div key={message.id} className={`flex ${message.sender === 'You' ? 'justify-end' : 'justify-start'}`}>
-              <div
-                className={`p-3 rounded-lg max-w-xs ${
-                  message.sender === 'You' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'
-                }`}
-              >
-                <strong>{message.sender}:</strong> {message.text}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Message Input Area */}
-        <div className="flex items-center border-t border-gray-300 py-4">
-          <input
-            type="text"
-            placeholder="Type a message..."
-            className="flex-1 border border-gray-300 rounded p-2 outline-none focus:ring-2 focus:ring-blue-400"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-          />
-          <button
-            className="bg-blue-500 text-white rounded px-4 ml-2 hover:bg-blue-600 transition"
-            onClick={handleSendMessage}
+      <div className="m-4 w-full flex flex-col items-center">
+        {investors.map((investor, index) => (
+          <motion.div
+            key={investor.id}
+            className="flex flex-col sm:flex-row items-center mb-5 p-4 border rounded-lg shadow-lg bg-white w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.2 }}
           >
-            Send
-          </button>
-        </div>
+            <img src={dummy} alt="Profile" className="w-14 h-14 sm:w-16 sm:h-16 rounded-full" />
+            <div className="mx-4 flex flex-col flex-grow">
+              <span className="text-lg sm:text-xl font-bold mb-1">{investor.name}</span>
+              <span className="text-gray-500 text-sm sm:text-base whitespace-normal">{investor.desc}</span>
+            </div>
+            <div className="flex flex-row sm:flex-col items-center sm:items-end gap-2">
+              <img src={dots} alt="More options" className="h-6 w-6 cursor-pointer" />
+              <motion.span
+                className="text-white bg-main-500 px-3 py-1 rounded cursor-pointer text-sm"
+                whileHover={{ scale: 1.1 }}
+              >
+                Visit Profile
+              </motion.span>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </div>
   );

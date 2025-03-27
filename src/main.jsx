@@ -13,6 +13,9 @@ import FreelancersList from './FreelancersList.jsx';
 import Dashboard from './Dashboard.jsx';
 import Earnings from './Earnings.jsx';
 import Messages from './Messages';
+import ForgotPassword from './ForgotPassword.jsx';
+import OTP from './OTP.jsx';
+import SecureAccount from './SecureAccount.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -29,6 +32,9 @@ createRoot(document.getElementById('root')).render(
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/earnings" element={<Earnings/>} />
         <Route path="/messages" element={<Messages/>} />
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
+        <Route path="/otp-verification" element={<OTP/>} />
+        <Route path="/secure-account" element={<SecureAccount/>} />
       
       </Routes>
     </BrowserRouter>

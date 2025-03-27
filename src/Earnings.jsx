@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import NavBar from './NavBar2';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FaBars } from 'react-icons/fa'; // Make sure to import FaBars
+import { FaBars } from 'react-icons/fa';
 
 function Earnings() {
   const screenLocation = useLocation();
   const navigate = useNavigate();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Add state for mobile menu
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [withdrawAmount, setWithdrawAmount] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const handleWithdraw = () => {
+    if (!withdrawAmount || !phoneNumber) {
+      alert('Please enter both amount and phone number');
+      return;
+    }
+    alert(`Withdrawal request for $${withdrawAmount} sent to ${phoneNumber}`);
+    setWithdrawAmount('');
+    setPhoneNumber('');
+  };
 
   return (
     <div className='h-full min-h-screen w-full flex flex-col md:flex-row'>
@@ -44,24 +56,15 @@ function Earnings() {
           </div>
         </div>
 
-        {/* Earnings Statistics */}
+        {/* Balance and Expected Earnings */}
         <div className='flex flex-wrap justify-center gap-4 md:gap-5 mx-4'>
-          {/* Total Earnings */}
           <div className='bg-white shadow-lg rounded-lg w-full md:w-1/3 p-4 flex items-center gap-3'>
-            <span className='text-secondary-500 text-lg font-bold'>Total Earnings</span>
-            <p className='text-secondary-500 text-2xl'>$10,000</p>
+            <span className='text-secondary-500 text-lg font-bold'>Current Balance</span>
+            <p className='text-secondary-500 text-2xl'>$5,000</p>
           </div>
-
-          {/* Monthly Earnings */}
           <div className='bg-white shadow-lg rounded-lg w-full md:w-1/3 p-4 flex items-center gap-3'>
-            <span className='text-secondary-500 text-lg font-bold'>Monthly Earnings</span>
-            <p className='text-secondary-500 text-2xl'>$2,500</p>
-          </div>
-
-          {/* Yearly Earnings */}
-          <div className='bg-white shadow-lg rounded-lg w-full md:w-1/3 p-4 flex items-center gap-3'>
-            <span className='text-secondary-500 text-lg font-bold'>Yearly Earnings</span>
-            <p className='text-secondary-500 text-2xl'>$30,000</p>
+            <span className='text-secondary-500 text-lg font-bold'>Expected Earnings</span>
+            <p className='text-secondary-500 text-2xl'>$8,000</p>
           </div>
         </div>
 
@@ -77,6 +80,33 @@ function Earnings() {
               <span className='text-main-500 font-bold'>${(index + 1) * 100}</span>
             </div>
           ))}
+        </div>
+
+        {/* Withdraw Money Section */}
+        <div className='mx-4 my-8 p-6 bg-white shadow-lg rounded-lg'>
+          <h2 className='text-xl font-bold mb-4'>Withdraw Money</h2>
+          <div className='flex flex-col gap-4'>
+            <input
+              type='number'
+              className='p-2 border rounded-lg'
+              placeholder='Enter amount'
+              value={withdrawAmount}
+              onChange={(e) => setWithdrawAmount(e.target.value)}
+            />
+            <input
+              type='text'
+              className='p-2 border rounded-lg'
+              placeholder='Enter phone number'
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+            <button
+              className='bg-main-500 text-white py-2 rounded-lg'
+              onClick={handleWithdraw}
+            >
+              Withdraw
+            </button>
+          </div>
         </div>
       </div>
     </div>

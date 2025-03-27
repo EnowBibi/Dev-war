@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from "framer-motion";
 import illustration1 from './assets/loginillustration2.png';
+import { motion } from 'framer-motion';
 import logo from './assets/logo3.png';
 import personIcon from './assets/person-icon.png';
 import passwordEye from './assets/password-eye.png';
 import passwordEyeSlash from './assets/password-eye.png';
+import facebook from './assets/Facebook.png'
+import google from './assets/Google.png'
+import apple from './assets/apple-icon.png'
 
-function Login() {
+
+function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();  // ✅ Initialize the navigate function
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleLogin = (e) => {
-    e.preventDefault(); // Prevent form submission refresh
-    navigate('/dashboard'); // ✅ Navigate to Dashboard or the next screen
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    // Implement your sign-in logic here
+    console.log('Signing in with:', email, password);
+    // After successful sign-in, navigate to the desired page
+    navigate('/dashboard'); // Example: Navigate to dashboard
   };
 
   return (
@@ -23,18 +32,19 @@ function Login() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      {/* Left Section - Login Form */}
+      
+      {/* Left Section - Signin Form */}
       <div className="flex justify-center items-center flex-1">
         <motion.form
           className="flex flex-col space-y-6 items-center w-[90%] md:w-[50%] bg-white p-8 rounded-lg shadow-md"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          onSubmit={handleLogin} // ✅ Attach function to form submission
+          onSubmit={handleSignIn}
         >
           <motion.img
             src={logo}
-            className='w-[150px] h-[150px]'
+            className='w-[348.0149841308594px] h-[184px]'
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -46,23 +56,25 @@ function Login() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            Login to Your Account
+          Welcome Back!
           </motion.span>
 
           {/* Email Input */}
           <div className="relative w-full">
             <label htmlFor="email" className="absolute left-10 top-3 text-gray-500 text-sm transition-all">Email</label>
-            <div className="relative flex items-center border border-gray-300 rounded-md shadow-sm focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-300">
+            <div className="relative flex items-center border  border-gray-300 rounded-md shadow-sm focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-300">
               <img
                 src={personIcon}
-                className="w-6 h-6 absolute left-3"
+                className="w-[24px] h-[24px] absolute left-2"
                 alt="Email Icon"
               />
               <input
                 type="email"
                 id="email"
                 placeholder=" "
-                className="w-full px-10 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-all"
+                className="w-full px-15 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-all"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
@@ -73,46 +85,79 @@ function Login() {
             <div className="relative flex items-center border border-gray-300 rounded-md shadow-sm focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-300">
               <img
                 src={showPassword ? passwordEyeSlash : passwordEye}
-                className="w-6 h-6 absolute left-3 cursor-pointer hover:scale-110 transition-all duration-200"
+                className="w-[24px] h-[24px] absolute left-3 cursor-pointer hover:scale-110 transition-all duration-200"
                 alt="Toggle Password Visibility"
                 onClick={() => setShowPassword(!showPassword)}
               />
               <input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? "text" : "password"}  
                 id="password"
                 placeholder=" "
                 className="w-full px-10 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-all"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
+                    {/* Forgot Password Link */}
+          <span
+            className="text-amber-500 underline cursor-pointer hover:text-amber-600 transition-all text-sm font-bold self-end"
+            onClick={() => navigate('/forgot-password')}
+          >
+            Forgot Password?
+          </span>
 
-          {/* Remember Me Checkbox */}
-          <div className="flex items-center">
-            <input type="checkbox" id="rememberMe" className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded transition-all" />
-            <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900 transition-all">Remember me</label>
-          </div>
-
-          {/* Animated Login Button */}
+          {/* Animated Submit Button */}
           <motion.button
-            className="bg-main-500 w-full rounded-[100px] text-white py-3 px-4 transition-all duration-300 ease-in-out hover:bg-green-400 hover:text-black font-semibold hover:shadow-lg hover:shadow-green-400/50 active:scale-95"
-            type="submit" // ✅ Trigger navigation on form submit
+            className="bg-main-500 w-full borde rounded-[100px] text-white py-3 px-4 transition-all duration-300 ease-in-out hover:bg-green-400 hover:text-black font-semibold hover:shadow-lg hover:shadow-green-400/50 active:scale-95"
+            type="submit"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Login
+            Sign In 
           </motion.button>
 
-          {/* Divider for Social Login */}
+          {/* Divider for Social Login (Optional) */}
           <div className="flex items-center w-full my-4">
             <hr className="flex-grow border-gray-300" />
             <span className="mx-2 text-gray-500">or continue with</span>
             <hr className="flex-grow border-gray-300" />
           </div>
+      
+          <div className="flex justify-center gap-4 space-x-4 mt-4">
+           {/* facebook */}
+                  <motion.div
+                    className="flex items-center justify-center w-12 h-12 bg-white border border-gray-300 rounded-lg shadow-md cursor-pointer hover:bg-gray-100 transition-all"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <img src={facebook} alt="Google" className="w-6 h-6" />
+                  </motion.div>
+                      {/* Google */}
+                  <motion.div
+                    className="flex items-center justify-center w-12 h-12 bg-white border border-gray-300 rounded-lg shadow-md cursor-pointer hover:bg-gray-100 transition-all"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <img src={google} alt="Google" className="w-6 h-6" />
+                  </motion.div>
+                      {/* apple */}
+                  <motion.div
+                    className="flex items-center justify-center w-12 h-12 bg-white border border-gray-300 rounded-lg shadow-md cursor-pointer hover:bg-gray-100 transition-all"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <img src={apple} alt="Google" className="w-6 h-6" />
+                  </motion.div>
 
-          {/* Link to Signup */}
+          </div>
+
           <span className='text-sm'>
-            Don't have an account? 
-            <span className='text-amber-500 underline cursor-pointer hover:text-amber-600 transition-all ml-2 font-bold' onClick={() => navigate('/signup')}>
+            Don't have an account?
+            <span
+              className='text-amber-500 underline cursor-pointer hover:text-amber-600 transition-all ml-2 font-bold'
+              onClick={() => navigate('/signup')}
+            >
               Sign Up
             </span>
           </span>
@@ -121,15 +166,17 @@ function Login() {
 
       {/* Right Section with Illustration (Hidden on Mobile) */}
       <motion.div
-        className="hidden md:flex flex-1 flex-col bg-gradient-to-r from-main-500 via-orange-500 to-main-500 animate-gradient-x justify-center items-center text-center"
+       className="hidden md:flex flex-1 flex-col justify-center items-center text-center"
+       style={{ backgroundColor: "#1F5D6659" }}
+       
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
       >
-        <span className="text-white font-bold text-[43px]">Sign in to your account</span>
+        <span className="text-[#295258] font-bold text-[43px]">Connecting Talent, Delivering Results.</span>
         <motion.img
           src={illustration1}
-          className="w-[500px] h-[500px]"
+          className="w-[642px] h-[456px]"
           alt="Illustration"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -140,4 +187,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignIn;
