@@ -29,7 +29,7 @@ function Earnings() {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/payment/initiate', // Change to your actual API endpoint
+        'https://dev-war.vercel.app/api/payment/initiate', // Change to your actual API endpoint
         {
           amount: withdrawAmount,
           email:user.email,
