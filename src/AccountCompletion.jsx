@@ -1,11 +1,11 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React ,{useContext} from 'react';
+import { useNavigate } from 'react-router';
 import { motion } from "framer-motion";
 import illustration1 from './assets/loginIllustration.png';
 import logo from './assets/logo3.png';
 
 function AccountCompletion() {
-  const navigate = useNavigate();  // ✅ Initialize the navigate function
+  const navigate = useNavigate();  
 
   return ( 
     <motion.div 

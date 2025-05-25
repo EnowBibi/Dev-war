@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
+import axios from 'axios';
 import NavBar from './NavBar2';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
@@ -9,15 +10,51 @@ function Earnings() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-
-  const handleWithdraw = () => {
+  const [loading, setLoading] = useState(false);
+  const [user,setUser]=useState("");
+ 
+  useEffect(() => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    }, []);
+  const handleWithdraw = async () => {
     if (!withdrawAmount || !phoneNumber) {
       alert('Please enter both amount and phone number');
       return;
     }
-    alert(`Withdrawal request for $${withdrawAmount} sent to ${phoneNumber}`);
-    setWithdrawAmount('');
-    setPhoneNumber('');
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/payment/initiate', // Change to your actual API endpoint
+        {
+          amount: withdrawAmount,
+          email:user.email,
+          userId:user._id,
+          externalId:"externalId", 
+          redirectUrl:"redirectUrl", 
+          message:"Just testing the api"
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true, // if using cookies/auth
+        }
+      );
+
+      alert(response.data.message || `Withdrawal request for $${withdrawAmount} sent to ${phoneNumber}`);
+      setWithdrawAmount('');
+      setPhoneNumber('');
+    } catch (error) {
+      console.error('Withdraw failed:', error.response?.data?.message || error.message);
+      alert('Failed to withdraw money. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -92,6 +129,7 @@ function Earnings() {
               placeholder='Enter amount'
               value={withdrawAmount}
               onChange={(e) => setWithdrawAmount(e.target.value)}
+              disabled={loading}
             />
             <input
               type='text'
@@ -99,12 +137,14 @@ function Earnings() {
               placeholder='Enter phone number'
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
+              disabled={loading}
             />
             <button
               className='bg-main-500 text-white py-2 rounded-lg'
               onClick={handleWithdraw}
+              disabled={loading}
             >
-              Withdraw
+              {loading ? 'Processing...' : 'Withdraw'}
             </button>
           </div>
         </div>

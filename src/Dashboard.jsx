@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import magnify2 from "./assets/MagnifyingGlass.png";
 import bell from "./assets/Bell.png";
 import dummy from "./assets/dummy.png";
@@ -10,6 +10,14 @@ function Dashboard() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const screenLocation = useLocation();
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   return (
     <div className='h-full min-h-screen w-full flex flex-col md:flex-row'>
@@ -51,7 +59,7 @@ function Dashboard() {
         {/* Header */}
         <div className='flex flex-col md:flex-row items-center mx-4 my-6 gap-5'>
           <div className='bg-gray-200 py-2 px-4 rounded flex-1 text-center'>
-            <span className='text-secondary-500 text-2xl md:text-3xl'>Welcome! Tambe</span>
+            <span className='text-secondary-500 text-2xl md:text-3xl'> Welcome! {user ? user.name : 'Loading...'} </span>
           </div>
 
           {/* Notification and User */}
