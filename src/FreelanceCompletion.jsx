@@ -42,7 +42,7 @@ const handleCompletion = async (e) => {
     const userId = storedUser?._id;
     console.log(userId);
     const response = await axios.put(
-      `http://localhost:5000/api/users/profile/${userId}`,
+      `https://bolooplace-backend.onrender.com/api/users/profile/${userId}`,
       updatedFields,
       {
         headers: {
