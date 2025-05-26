@@ -58,7 +58,6 @@ const handleCompletion = async (e) => {
     // Save updated user to localStorage
     localStorage.setItem('user', JSON.stringify(updatedUser));
 
-    alert('Profile updated successfully!');
     navigate('/dashboard');
   } catch (error) {
     console.error('Update failed:', error.response?.data?.message || error.message);

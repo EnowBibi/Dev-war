@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom'
 
 function NavBar2({ screen }) {
     const navigate = useNavigate();
-    console.log(screen);
     
     return (
         <div className=" hidden md:flex flex-col items-center px-5 py-10 bg-main-500 flex-grow max-w-3/12 min-h-screen w-full">

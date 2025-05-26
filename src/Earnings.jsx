@@ -8,7 +8,7 @@ function Earnings() {
   const screenLocation = useLocation();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [withdrawAmount, setWithdrawAmount] = useState('');
+  const [withdrawAmount, setWithdrawAmount] = useState("");
   const [phoneNumber, setPhoneNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [user,setUser]=useState("");
@@ -19,43 +19,80 @@ function Earnings() {
         setUser(JSON.parse(storedUser));
       }
     }, []);
-  const handleWithdraw = async () => {
-    if (!withdrawAmount || !phoneNumber) {
-      alert('Please enter both amount and phone number');
-      return;
-    }
+const handleWithdraw = async () => {
+  if (!withdrawAmount || !phoneNumber) {
+    alert('Please enter both amount and phone number.');
+    return;
+  }
 
-    setLoading(true);
+  const amount = parseInt(withdrawAmount, 10);
 
-    try {
-      const response = await axios.post(
-        'https://dev-war.vercel.app/api/payment/initiate', // Change to your actual API endpoint
-        {
-          amount: withdrawAmount,
-          email:user.email,
-          userId:user._id,
-          externalId:"externalId", 
-          redirectUrl:"redirectUrl", 
-          message:"Just testing the api"
+  if (isNaN(amount) || amount < 100) {
+    alert('Amount must be a number and at least 100 XAF.');
+    return;
+  }
+
+  if (!/^6\d{8}$/.test(phoneNumber)) {
+    alert('Please enter a valid Cameroon phone number (starting with 6 and 9 digits).');
+    return;
+  }
+
+  if (!user?.name || !user?.email || !user?._id) {
+    alert("User details are incomplete. Please log in again.");
+    return;
+  }
+
+  setLoading(true);
+
+  const externalId = `txn_${Date.now()}`; // A unique external ID
+  const redirectUrl = "https://yourdomain.com/payment/complete"; // ✅ Add your actual redirect URL
+
+  const paymentData = {
+    amount,
+    phone: phoneNumber,
+    medium: "mobile money", // or "ORANGE", based on your logic
+    name: user.name,
+    email: user.email,
+    userId: user._id,
+    externalId,
+    message: "Withdrawal request from Earnings page",
+    redirectUrl // ✅ This was missing earlier
+  };
+
+  console.log('Sending paymentData:', paymentData);
+
+  try {
+    const response = await axios.post(
+      'https://bolooplace-backend.onrender.com/api/payment/initiate',
+      paymentData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true, // if using cookies/auth
-        }
-      );
+        withCredentials: true,
+      }
+    );
 
-      alert(response.data.message || `Withdrawal request for $${withdrawAmount} sent to ${phoneNumber}`);
+    const data = response.data;
+
+    if (data.success && data.paymentLink) {
+      alert('Payment initiated successfully!');
+      window.open(data.paymentLink, '_blank');
+
       setWithdrawAmount('');
       setPhoneNumber('');
-    } catch (error) {
-      console.error('Withdraw failed:', error.response?.data?.message || error.message);
-      alert('Failed to withdraw money. Please try again.');
-    } finally {
-      setLoading(false);
+    } else {
+      alert(data.message || 'Payment initiation failed.');
     }
-  };
+  } catch (error) {
+    console.error('Withdraw failed:', error.response?.data || error.message);
+    alert(error.response?.data?.message || 'Failed to withdraw money. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   return (
     <div className='h-full min-h-screen w-full flex flex-col md:flex-row'>
